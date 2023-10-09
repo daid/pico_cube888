@@ -4,7 +4,11 @@ project(my_project)
 pico_sdk_init()
 
 add_executable(cube
-    src/main.cpp src/pixels.cpp src/pixels.h src/accel.cpp src/accel.h
+    src/main.cpp
+    src/pixels.cpp src/pixels.h
+    src/accel.cpp src/accel.h
+    src/cube.cpp src/cube.h
+    src/hsv.cpp src/hsv.h
 )
 
 pico_generate_pio_header(cube

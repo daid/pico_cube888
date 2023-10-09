@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 struct Pixel {
     uint8_t g, r, b;
