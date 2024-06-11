@@ -18,6 +18,20 @@ Point idx_to_point(int idx) {
     }
 }
 
+Point idx_to_normal(int idx)
+{
+    int side = (idx & 0xFC0) >> 6;
+    switch(side) {
+    case 0: return { 0, 0, 1.0f};
+    case 1: return { 0,-1.0f, 0};
+    case 2: return { 0, 0,-1.0f};
+    case 3: return { 0, 1.0f, 0};
+    case 4: return { 1.0f, 0, 0};
+    case 5: return {-1.0f, 0, 0};
+    default: return {0, 0, 0};
+    }
+}
+
 static int xy_to_idx(int x, int y) {
     x = std::clamp(x, 0, 7);
     y = std::clamp(y, 0, 7);

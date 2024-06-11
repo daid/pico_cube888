@@ -5,3 +5,4 @@
 
 void accelInit();
 Point accelRead();
+unsigned int accelRawRng();

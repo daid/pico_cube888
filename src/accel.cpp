@@ -1,6 +1,7 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 #include "accel.h"
+#include "pico/stdlib.h"
 
 static constexpr int ADXL345_ADDRESS = 0x53;
 static constexpr int ADXL345_POWER_CTL = 0x2D;
@@ -17,6 +18,7 @@ void accelInit() {
     i2c_write_blocking(i2c1, ADXL345_ADDRESS, c, 2, false);
     c[0] = ADXL345_DATA_FORMAT; c[1] = 0x0B;
     i2c_write_blocking(i2c1, ADXL345_ADDRESS, c, 2, false);
+    sleep_ms(100);
 }
 
 Point accelRead() {
@@ -28,4 +30,12 @@ Point accelRead() {
     int16_t y = buffer[2] | (buffer[3] << 8);
     int16_t z = buffer[4] | (buffer[5] << 8);
     return {float(x) / 256.0f, float(y) / 256.0f, float(z) / 256.0f};
+}
+
+unsigned int accelRawRng() {
+    uint8_t buffer[6];
+    buffer[0] = ADXL345_DATAX0;
+    i2c_write_blocking(i2c1, ADXL345_ADDRESS, buffer, 1, true);
+    i2c_read_blocking(i2c1, ADXL345_ADDRESS, buffer, 6, false);
+    return buffer[0] ^ buffer[1] ^ buffer[2] ^ buffer[3] ^ buffer[4] ^ buffer[5];
 }
